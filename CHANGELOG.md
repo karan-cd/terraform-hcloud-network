@@ -1,3 +1,10 @@
+# [0.2.0](https://github.com/terraform-hc-modules/terraform-hcloud-network/compare/v0.1.0...v0.2.0) (2026-04-20)
+
+
+### Features
+
+* add pre-commit, semantic-release, and improve examples ([70c15db](https://github.com/terraform-hc-modules/terraform-hcloud-network/commit/70c15dbd696b4ce946428721c50351b759536985))
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
