@@ -1,3 +1,10 @@
+# [0.3.0](https://github.com/terraform-hc-modules/terraform-hcloud-network/compare/v0.2.1...v0.3.0) (2026-04-20)
+
+
+### Features
+
+* add validations, richer outputs, docs, examples and tests ([22c1c64](https://github.com/terraform-hc-modules/terraform-hcloud-network/commit/22c1c64d8c688c202573864ae6459eb1b9e761cf))
+
 ## [0.2.1](https://github.com/terraform-hc-modules/terraform-hcloud-network/compare/v0.2.0...v0.2.1) (2026-04-20)
 
 
