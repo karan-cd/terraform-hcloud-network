@@ -1,3 +1,10 @@
+## [0.2.1](https://github.com/terraform-hc-modules/terraform-hcloud-network/compare/v0.2.0...v0.2.1) (2026-04-20)
+
+
+### Bug Fixes
+
+* examples now use root module with source = ../../ ([d8df528](https://github.com/terraform-hc-modules/terraform-hcloud-network/commit/d8df528f51a9c9be57582098c2a011522d626cfd))
+
 # [0.2.0](https://github.com/terraform-hc-modules/terraform-hcloud-network/compare/v0.1.0...v0.2.0) (2026-04-20)
 
 
