@@ -137,8 +137,8 @@ No resources.
 | <a name="input_load_balancer_algorithm"></a> [load\_balancer\_algorithm](#input\_load\_balancer\_algorithm) | Algorithm for the load balancer. | `string` | `"round_robin"` | no |
 | <a name="input_load_balancer_location"></a> [load\_balancer\_location](#input\_load\_balancer\_location) | Location of the load balancer. | `string` | `"fsn1"` | no |
 | <a name="input_load_balancer_name"></a> [load\_balancer\_name](#input\_load\_balancer\_name) | Name of the load balancer. Defaults to name-lb. | `string` | `null` | no |
-| <a name="input_load_balancer_services"></a> [load\_balancer\_services](#input\_load\_balancer\_services) | List of services for the load balancer. | `any` | `[]` | no |
-| <a name="input_load_balancer_targets"></a> [load\_balancer\_targets](#input\_load\_balancer\_targets) | List of targets for the load balancer. | `any` | `[]` | no |
+| <a name="input_load_balancer_services"></a> [load\_balancer\_services](#input\_load\_balancer\_services) | List of services for the load balancer. | <pre>list(object({<br/>    protocol         = string<br/>    listen_port      = number<br/>    destination_port = number<br/>    proxyprotocol    = optional(bool, false)<br/>    health_check = optional(object({<br/>      protocol = string<br/>      port     = number<br/>      interval = optional(number, 15)<br/>      timeout  = optional(number, 10)<br/>      retries  = optional(number, 3)<br/>      http = optional(object({<br/>        domain       = optional(string)<br/>        path         = optional(string, "/")<br/>        response     = optional(string)<br/>        status_codes = optional(list(string), ["2??", "3??"])<br/>        tls          = optional(bool, false)<br/>      }))<br/>    }))<br/>    http = optional(object({<br/>      sticky_sessions = optional(bool, false)<br/>      cookie_name     = optional(string)<br/>      cookie_lifetime = optional(number)<br/>      certificates    = optional(list(number))<br/>      redirect_http   = optional(bool, false)<br/>    }))<br/>  }))</pre> | `[]` | no |
+| <a name="input_load_balancer_targets"></a> [load\_balancer\_targets](#input\_load\_balancer\_targets) | List of targets for the load balancer. | <pre>list(object({<br/>    type           = string<br/>    server_id      = optional(number)<br/>    label_selector = optional(string)<br/>    ip             = optional(string)<br/>    use_private_ip = optional(bool, false)<br/>  }))</pre> | `[]` | no |
 | <a name="input_load_balancer_type"></a> [load\_balancer\_type](#input\_load\_balancer\_type) | Type of the load balancer. | `string` | `"lb11"` | no |
 | <a name="input_outbound_rules"></a> [outbound\_rules](#input\_outbound\_rules) | List of outbound firewall rules. | <pre>list(object({<br/>    description     = optional(string)<br/>    protocol        = string<br/>    port            = optional(string)<br/>    source_ips      = optional(list(string))<br/>    destination_ips = optional(list(string), ["0.0.0.0/0", "::/0"])<br/>  }))</pre> | `[]` | no |
 | <a name="input_routes"></a> [routes](#input\_routes) | List of routes to create. | <pre>list(object({<br/>    destination = string<br/>    gateway     = string<br/>  }))</pre> | `[]` | no |
@@ -148,15 +148,26 @@ No resources.
 
 | Name | Description |
 | ---- | ----------- |
+| <a name="output_firewall"></a> [firewall](#output\_firewall) | Firewall attributes. |
 | <a name="output_firewall_id"></a> [firewall\_id](#output\_firewall\_id) | ID of the firewall. |
 | <a name="output_firewall_name"></a> [firewall\_name](#output\_firewall\_name) | Name of the firewall. |
 | <a name="output_ip_range"></a> [ip\_range](#output\_ip\_range) | IP range of the network. |
+| <a name="output_load_balancer"></a> [load\_balancer](#output\_load\_balancer) | Load balancer attributes. |
 | <a name="output_load_balancer_id"></a> [load\_balancer\_id](#output\_load\_balancer\_id) | ID of the load balancer. |
 | <a name="output_load_balancer_ipv4"></a> [load\_balancer\_ipv4](#output\_load\_balancer\_ipv4) | IPv4 address of the load balancer. |
 | <a name="output_load_balancer_ipv6"></a> [load\_balancer\_ipv6](#output\_load\_balancer\_ipv6) | IPv6 address of the load balancer. |
+| <a name="output_load_balancer_network_attachment"></a> [load\_balancer\_network\_attachment](#output\_load\_balancer\_network\_attachment) | Load balancer network attachment attributes. |
+| <a name="output_load_balancer_service_ids"></a> [load\_balancer\_service\_ids](#output\_load\_balancer\_service\_ids) | Map of load balancer service IDs keyed by index. |
+| <a name="output_load_balancer_services"></a> [load\_balancer\_services](#output\_load\_balancer\_services) | Map of created load balancer services keyed by index. |
+| <a name="output_load_balancer_target_ids"></a> [load\_balancer\_target\_ids](#output\_load\_balancer\_target\_ids) | Map of load balancer target IDs keyed by index. |
+| <a name="output_load_balancer_targets"></a> [load\_balancer\_targets](#output\_load\_balancer\_targets) | Map of created load balancer targets keyed by index. |
+| <a name="output_network"></a> [network](#output\_network) | Network attributes. |
 | <a name="output_network_id"></a> [network\_id](#output\_network\_id) | ID of the network. |
 | <a name="output_network_name"></a> [network\_name](#output\_network\_name) | Name of the network. |
+| <a name="output_route_ids"></a> [route\_ids](#output\_route\_ids) | Map of route IDs. |
+| <a name="output_routes"></a> [routes](#output\_routes) | Map of created routes keyed by index. |
 | <a name="output_subnet_ids"></a> [subnet\_ids](#output\_subnet\_ids) | Map of subnet IDs. |
+| <a name="output_subnets"></a> [subnets](#output\_subnets) | Map of created subnets keyed by index. |
 <!-- END_TF_DOCS -->
 
 ## License

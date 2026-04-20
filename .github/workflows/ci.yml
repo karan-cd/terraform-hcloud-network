@@ -30,6 +30,11 @@ jobs:
       - name: Validate
         run: terraform validate
 
+      - name: Test
+        run: terraform test
+        env:
+          HCLOUD_TOKEN: dummy
+
   lint:
     name: Lint
     runs-on: ubuntu-latest
