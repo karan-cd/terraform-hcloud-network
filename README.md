@@ -120,6 +120,7 @@ No resources.
 
 | Name | Description | Type | Default | Required |
 | ---- | ----------- | ---- | ------- | :------: |
+| <a name="input_name"></a> [name](#input\_name) | Name prefix for resources. | `string` | n/a | yes |
 | <a name="input_create_firewall"></a> [create\_firewall](#input\_create\_firewall) | Whether to create the firewall. | `bool` | `false` | no |
 | <a name="input_create_load_balancer"></a> [create\_load\_balancer](#input\_create\_load\_balancer) | Whether to create the load balancer. | `bool` | `false` | no |
 | <a name="input_create_vpc"></a> [create\_vpc](#input\_create\_vpc) | Whether to create the VPC. | `bool` | `true` | no |
@@ -133,7 +134,6 @@ No resources.
 | <a name="input_load_balancer_services"></a> [load\_balancer\_services](#input\_load\_balancer\_services) | List of services for the load balancer. | `any` | `[]` | no |
 | <a name="input_load_balancer_targets"></a> [load\_balancer\_targets](#input\_load\_balancer\_targets) | List of targets for the load balancer. | `any` | `[]` | no |
 | <a name="input_load_balancer_type"></a> [load\_balancer\_type](#input\_load\_balancer\_type) | Type of the load balancer. | `string` | `"lb11"` | no |
-| <a name="input_name"></a> [name](#input\_name) | Name prefix for resources. | `string` | n/a | yes |
 | <a name="input_outbound_rules"></a> [outbound\_rules](#input\_outbound\_rules) | List of outbound firewall rules. | <pre>list(object({<br/>    description     = optional(string)<br/>    protocol        = string<br/>    port            = optional(string)<br/>    source_ips      = optional(list(string))<br/>    destination_ips = optional(list(string), ["0.0.0.0/0", "::/0"])<br/>  }))</pre> | `[]` | no |
 | <a name="input_routes"></a> [routes](#input\_routes) | List of routes to create. | <pre>list(object({<br/>    destination = string<br/>    gateway     = string<br/>  }))</pre> | `[]` | no |
 | <a name="input_subnets"></a> [subnets](#input\_subnets) | List of subnets to create. | <pre>list(object({<br/>    ip_range     = string<br/>    network_zone = string<br/>    type         = optional(string, "cloud")<br/>    vswitch_id   = optional(number)<br/>  }))</pre> | `[]` | no |
