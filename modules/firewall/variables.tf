@@ -50,8 +50,8 @@ variable "inbound_rules" {
         contains(["in"], lower(try(r.direction, "in"))) &&
         contains(["tcp", "udp", "icmp", "esp", "gre"], lower(r.protocol)) &&
         (try(r.port, null) == null || can(regex("^([0-9]{1,5})(-[0-9]{1,5})?$", r.port))) &&
-        alltrue([for ip in try(r.source_ips, []) : can(cidrhost(ip, 0))]) &&
-        alltrue([for ip in try(r.destination_ips, []) : can(cidrhost(ip, 0))])
+        alltrue([for ip in coalesce(try(r.source_ips, null), []) : can(cidrhost(ip, 0))]) &&
+        alltrue([for ip in coalesce(try(r.destination_ips, null), []) : can(cidrhost(ip, 0))])
       )
     ])
     error_message = "Inbound rules: direction must be in; protocol must be one of tcp/udp/icmp/esp/gre; port (if set) must be like 80 or 80-90; and IPs must be valid CIDR blocks."
@@ -76,8 +76,8 @@ variable "outbound_rules" {
         contains(["out"], lower(try(r.direction, "out"))) &&
         contains(["tcp", "udp", "icmp", "esp", "gre"], lower(r.protocol)) &&
         (try(r.port, null) == null || can(regex("^([0-9]{1,5})(-[0-9]{1,5})?$", r.port))) &&
-        alltrue([for ip in try(r.source_ips, []) : can(cidrhost(ip, 0))]) &&
-        alltrue([for ip in try(r.destination_ips, []) : can(cidrhost(ip, 0))])
+        alltrue([for ip in coalesce(try(r.source_ips, null), []) : can(cidrhost(ip, 0))]) &&
+        alltrue([for ip in coalesce(try(r.destination_ips, null), []) : can(cidrhost(ip, 0))])
       )
     ])
     error_message = "Outbound rules: direction must be out; protocol must be one of tcp/udp/icmp/esp/gre; port (if set) must be like 80 or 80-90; and IPs must be valid CIDR blocks."

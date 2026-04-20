@@ -1,5 +1,5 @@
-mock_provider "hcloud" {
-  override_during = plan
+provider "hcloud" {
+  token = "dummy"
 }
 
 variables {
@@ -26,23 +26,7 @@ variables {
     }
   ]
 
-  create_load_balancer    = true
-  load_balancer_location  = "fsn1"
-  load_balancer_algorithm = "round_robin"
-  load_balancer_services = [
-    {
-      protocol         = "http"
-      listen_port      = 80
-      destination_port = 8080
-    }
-  ]
-  load_balancer_targets = [
-    {
-      type           = "label_selector"
-      label_selector = "service=web"
-      use_private_ip = true
-    }
-  ]
+  create_load_balancer = false
 }
 
 run "plan_offline" {

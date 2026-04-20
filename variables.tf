@@ -130,8 +130,8 @@ variable "inbound_rules" {
       for r in var.inbound_rules : (
         contains(["tcp", "udp", "icmp", "esp", "gre"], lower(r.protocol)) &&
         (try(r.port, null) == null || can(regex("^([0-9]{1,5})(-[0-9]{1,5})?$", r.port))) &&
-        alltrue([for ip in try(r.source_ips, []) : can(cidrhost(ip, 0))]) &&
-        alltrue([for ip in try(r.destination_ips, []) : can(cidrhost(ip, 0))])
+        alltrue([for ip in coalesce(try(r.source_ips, null), []) : can(cidrhost(ip, 0))]) &&
+        alltrue([for ip in coalesce(try(r.destination_ips, null), []) : can(cidrhost(ip, 0))])
       )
     ])
     error_message = "Inbound rules: `protocol` must be one of tcp/udp/icmp/esp/gre; `port` (if set) must be like 80 or 80-90; and IPs must be valid CIDR blocks."
@@ -154,8 +154,8 @@ variable "outbound_rules" {
       for r in var.outbound_rules : (
         contains(["tcp", "udp", "icmp", "esp", "gre"], lower(r.protocol)) &&
         (try(r.port, null) == null || can(regex("^([0-9]{1,5})(-[0-9]{1,5})?$", r.port))) &&
-        alltrue([for ip in try(r.source_ips, []) : can(cidrhost(ip, 0))]) &&
-        alltrue([for ip in try(r.destination_ips, []) : can(cidrhost(ip, 0))])
+        alltrue([for ip in coalesce(try(r.source_ips, null), []) : can(cidrhost(ip, 0))]) &&
+        alltrue([for ip in coalesce(try(r.destination_ips, null), []) : can(cidrhost(ip, 0))])
       )
     ])
     error_message = "Outbound rules: `protocol` must be one of tcp/udp/icmp/esp/gre; `port` (if set) must be like 80 or 80-90; and IPs must be valid CIDR blocks."
