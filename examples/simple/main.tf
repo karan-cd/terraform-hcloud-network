@@ -11,11 +11,11 @@ locals {
 }
 
 ################################################################################
-# Network Module - VPC Only
+# Network Module - Simple VPC
 ################################################################################
 
-module "vpc" {
-  source = "../../modules/vpc"
+module "network" {
+  source = "../../"
 
   name     = local.name
   ip_range = "10.0.0.0/16"
@@ -27,4 +27,14 @@ module "vpc" {
       network_zone = "eu-central"
     }
   ]
+}
+
+output "network_id" {
+  description = "ID of the network"
+  value       = module.network.network_id
+}
+
+output "subnet_ids" {
+  description = "IDs of subnets"
+  value       = module.network.subnet_ids
 }

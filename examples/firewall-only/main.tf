@@ -11,15 +11,20 @@ locals {
 }
 
 ################################################################################
-# Firewall Module - Standalone
+# Network Module - Firewall Only (No VPC)
 ################################################################################
 
-module "firewall" {
-  source = "../../modules/firewall"
+module "network" {
+  source = "../../"
 
   name   = local.name
   labels = local.tags
 
+  # Disable VPC creation
+  create_vpc = false
+
+  # Create firewall only
+  create_firewall = true
   inbound_rules = [
     {
       description = "Allow SSH"
@@ -32,19 +37,17 @@ module "firewall" {
       protocol    = "tcp"
       port        = "80"
       source_ips  = ["0.0.0.0/0", "::/0"]
-    }
-  ]
-
-  outbound_rules = [
-    {
-      description     = "Allow all outbound"
-      protocol        = "tcp"
-      destination_ips = ["0.0.0.0/0", "::/0"]
     },
     {
-      description     = "Allow all UDP outbound"
-      protocol        = "udp"
-      destination_ips = ["0.0.0.0/0", "::/0"]
+      description = "Allow HTTPS"
+      protocol    = "tcp"
+      port        = "443"
+      source_ips  = ["0.0.0.0/0", "::/0"]
     }
   ]
+}
+
+output "firewall_id" {
+  description = "ID of the firewall"
+  value       = module.network.firewall_id
 }
