@@ -3,8 +3,7 @@ name: CI
 on:
   pull_request:
   push:
-    branches:
-      - main
+    branches: [main]
 
 permissions:
   contents: read
@@ -13,100 +12,84 @@ jobs:
   terraform:
     name: Terraform
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v4
+        uses: hashicorp/setup-terraform@v3
         with:
           terraform_wrapper: false
 
-      - name: Setup Smurf
-        uses: clouddrove/smurf@v1.1.0
+      - name: Format Check
+        run: terraform fmt -check -recursive
 
-      - name: Terraform Format Check
-        run: smurf stf fmt --recursive --timeout 5s
+      - name: Init
+        run: terraform init -backend=false
 
-      - name: Terraform Init
-        run: smurf stf init
+      - name: Validate
+        run: terraform validate
 
-      - name: Terraform Validate
-        run: smurf stf validate
+      - name: Test
+        run: terraform test
+        env:
+          HCLOUD_TOKEN: dummy
 
   lint:
-    name: Terraform Lint
+    name: Lint
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Setup TFLint
         uses: terraform-linters/setup-tflint@v4
         with:
           tflint_version: latest
 
-      - name: Initialize TFLint
+      - name: Init TFLint
         run: tflint --init
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
       - name: Run TFLint
-        run: tflint --recursive -f compact
+        run: tflint -f compact --recursive
 
   security:
-    name: Security Scan
+    name: Security
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
-      - name: Run tfsec
+      - name: tfsec
         uses: aquasecurity/tfsec-action@v1.0.3
         with:
           additional_args: --exclude-downloaded-modules --minimum-severity MEDIUM
 
-      - name: Run Checkov
+      - name: Checkov
         uses: bridgecrewio/checkov-action@v12
         with:
           directory: .
-          framework: terraform
           quiet: true
+          framework: terraform
           skip_check: CKV_TF_1,CKV_TF_2
 
   docs:
-    name: Terraform Docs
+    name: Documentation
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
-      - name: Install terraform-docs
+      - name: Setup terraform-docs
         uses: jaxxstorm/action-install-gh-release@v1
         with:
           repo: terraform-docs/terraform-docs
 
-      - name: Verify README is up to date
+      - name: Check README
         run: |
           if grep -q "BEGIN_TF_DOCS" README.md; then
-            terraform-docs markdown table \
-              --output-file README.md \
-              --output-mode inject .
-
-            if ! git diff --quiet README.md; then
-              echo "::error::README.md is out of date."
-              echo "Run the following command locally:"
-              echo ""
-              echo "terraform-docs markdown table --output-file README.md --output-mode inject ."
-              echo ""
-              echo "Then commit the updated README.md."
-              git --no-pager diff README.md
-              exit 1
-            fi
-          else
-            echo "README.md does not contain a BEGIN_TF_DOCS block. Skipping documentation check."
+            terraform-docs markdown table --output-file README.md --output-mode inject .
+            git diff --exit-code README.md
           fi
