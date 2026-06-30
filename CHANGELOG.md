@@ -1,3 +1,11 @@
+# [1.1.0](https://github.com/karan-cd/terraform-hcloud-network/compare/v1.0.0...v1.1.0) (2026-06-30)
+
+
+### Features
+
+* added the workflow yml ([c735823](https://github.com/karan-cd/terraform-hcloud-network/commit/c735823f225f3555c4e9c717b5e7fe431d7be720))
+* added the workflow yml ([a41ce9b](https://github.com/karan-cd/terraform-hcloud-network/commit/a41ce9b748db11f8ee5de3965c21f19d0d588dac))
+
 # 1.0.0 (2026-06-30)
 
 
