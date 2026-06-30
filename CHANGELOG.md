@@ -1,3 +1,19 @@
+# 1.0.0 (2026-06-30)
+
+
+### Bug Fixes
+
+* examples now use root module with source = ../../ ([d8df528](https://github.com/karan-cd/terraform-hcloud-network/commit/d8df528f51a9c9be57582098c2a011522d626cfd))
+* make terraform tests pass in CI ([1d4cce1](https://github.com/karan-cd/terraform-hcloud-network/commit/1d4cce13cdaf7929366f82c814e5a7809b5c27b3))
+* updated the ci.yml ([2f49e1e](https://github.com/karan-cd/terraform-hcloud-network/commit/2f49e1e59acac8034c31621cf5b16476ac2be5fb))
+
+
+### Features
+
+* add pre-commit, semantic-release, and improve examples ([70c15db](https://github.com/karan-cd/terraform-hcloud-network/commit/70c15dbd696b4ce946428721c50351b759536985))
+* add validations, richer outputs, docs, examples and tests ([22c1c64](https://github.com/karan-cd/terraform-hcloud-network/commit/22c1c64d8c688c202573864ae6459eb1b9e761cf))
+* initial terraform-hcloud-network module with vpc, firewall, load-balancer submodules ([266eb08](https://github.com/karan-cd/terraform-hcloud-network/commit/266eb080ed88ed27ad2a69beb04b1ab848a645ea))
+
 ## [0.3.1](https://github.com/terraform-hc-modules/terraform-hcloud-network/compare/v0.3.0...v0.3.1) (2026-04-20)
 
 
